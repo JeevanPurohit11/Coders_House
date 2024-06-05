@@ -1,0 +1,4 @@
+/* //styles inside this component only apply in navigation components not to any child component .  */
+.navbar{
+    padding: 20px 0;
+}

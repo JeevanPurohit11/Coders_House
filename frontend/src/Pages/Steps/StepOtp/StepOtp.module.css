@@ -1,0 +1,11 @@
+/* created a gobal style object using composes */
+.cardWrapper{
+    composes : cardWrapper from '../../../App.module.css';   
+ }
+ 
+.buttonParagraph{
+    composes : buttonParagraph from '../StepPhoneEmail/StepPhoneEmail.module.css';  
+}
+ .actionButtonWrap{
+    composes : actionButtonWrap from '../StepPhoneEmail/StepPhoneEmail.module.css';
+}
