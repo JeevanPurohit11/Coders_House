@@ -1,13 +1,15 @@
-require('dotenv').config  //(1) we can use all credetial avaialable in .env
-const express=require('express');  // (2)imported express
-const app = express();  //called(3)
-const PORT= process.env.PORT || 5500; // (4)if given port by env in not avialable so run our server on PORT 5500
+require('dotenv').config();  // (1) We can use all credentials available in .env
+const express = require('express');  // (2) Imported express
+const app = express();  // (3) Called
+const PORT = process.env.PORT || 5500; // (4) If given port by env is not available, run our server on PORT 5500
 
-//creating th route
-app.get('/',(req,res)=>{
+// Creating the route. Rather than giving logic here, I will implement logic in another file and use it here.
+app.get('/', (req, res) => {
   res.send('Hello from express Js');
 });
 
+// Import router
+const router = require('./routes');
+app.use(router);  // Registered router (now express knows this router exists)
 
-app.listen(PORT,()=>console.log(`Listening on port ${PORT}`));   //(5) print this message ,when server run(server has been created in this 5 line)
-
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));  // (5) Print this message when server runs (server has been created in this 5 lines)
