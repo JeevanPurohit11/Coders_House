@@ -17,8 +17,21 @@ class AuthController {
         const data =`${phone}.${otp}.${expire}`;    // this three thing are store in our hash;
         const hash = hashService.hashOtp(data);
 
+         
+        //sending live OTP
+        try{
+            await otpServices.sendBySms(phone,otp);
+             res.json({
+                hash : `${hash}.${expire}`,
+                phone,
+            })
+        }catch(err){
+            console.log(err);
+            res.status(500).json({message : 'message sending failed'});
+        }
 
-        res.json({ hash : hash}); // Send response if phone number is provided
+
+        // res.json({ hash : hash}); // Send response if phone number is provided
 
 
      //HASHING OF OTP
