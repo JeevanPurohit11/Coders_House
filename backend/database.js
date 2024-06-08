@@ -14,3 +14,5 @@ function DbConnect(){
        console.log('DB Connected ....');
    });
 }
+
+module.exports = DbConnect;
