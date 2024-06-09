@@ -2,6 +2,8 @@ const otpServices = require('../Services/otp-service')
 const hashService = require('../Services/hash-services')
 const crypto = require('crypto');
 const otpService = require('../Services/otp-service');
+const userService = require('../Services/user-service');
+const tokenService = require('../Services/token-services');
 
 class AuthController {
 
@@ -45,7 +47,7 @@ class AuthController {
             res.status(400).json({message : "All fields are required. "});
          }
          const [hashOtp , expire]= hash.split('.');
-         if(Date.now() > expire){
+         if(Date.now() > +expire){                                         // + convert into time (int) not a string
             res.status(400).json({message : "OTP expired."})
          }
 
@@ -61,6 +63,19 @@ class AuthController {
          let accessToken;
          let refreshToken;
          
+         try{
+              user = await userService.findUser({phone : phone }) ;  // in Js when key ans pair both are same we can write in single ({phone})
+              if(!user){
+                   user =await userService.createUser({phone : phone});
+              }   
+         }catch(err){
+             console.log(err);
+             res.status(500).json({message : 'DB error.'});
+         }
+
+         //token generating (JWT) javascript web token .(we doesnt have session here ,both frontend and backend are not connected , 
+       //  so if we have token then we can logined in ,on each request we will send this token on server )
+       // and server verify it ,if verified then server will send protected data to us .
 
      }
 }
