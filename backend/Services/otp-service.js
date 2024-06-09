@@ -1,9 +1,9 @@
-const crypto = require("crypto");
+const crypto = require('crypto');
+const hashService = require('./hash-services');
 
-
-const smsSid=process.env.smsSid; 
-const smsAuthToken=process.env.smsAuthToken;
-const twilio=require('twilio')(smsSid,smsAuthToken,{
+// const smsSid=process.env.smsSid; 
+// const smsAuthToken=process.env.smsAuthToken;
+const twilio=require('twilio')(process.env.SMS_SID,process.env.SMS_AUTH_TOKEN,{
     lazyLoading: true              // writen for obtimized working.
 })
 class otpServices{
@@ -16,11 +16,13 @@ class otpServices{
         return await twilio.messages.create({
            to : phone,
            from : process.env.SMS_FROM_NUMBER,
-           body : `Your COderHouse project started sending otp to Rakesh :  ${otp}`,
+           body : ` Jay Data re Sa ...the COderHouse project preparing by Jeevan started sending otp to Rakesh to Login(Otp came from Jeevan Code ..) :  ${otp}`,
         });
     }
 
-    verifyOtp() {}
+    verifyOtp(hashedOtp, data) {             //checking sended hashed otp + original otp matches
+        return hashedOtp === data;
+    }
 }
 
 module.exports= new otpServices();
