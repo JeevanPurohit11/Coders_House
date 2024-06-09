@@ -1,6 +1,7 @@
 const otpServices = require('../Services/otp-service')
 const hashService = require('../Services/hash-services')
 const crypto = require('crypto');
+const otpService = require('../Services/otp-service');
 
 class AuthController {
 
@@ -35,7 +36,33 @@ class AuthController {
 
 
      //HASHING OF OTP
-    }  
+    } 
+    
+    //verify OTP
+    verifyOtp(req,res){
+         const { otp, hash, phone }= req.body;
+         if(!otp || !hash || !phone) {
+            res.status(400).json({message : "All fields are required. "});
+         }
+         const [hashOtp , expire]= hash.split('.');
+         if(Date.now() > expire){
+            res.status(400).json({message : "OTP expired."})
+         }
+
+         const data = `${phone}.${otp}.${expire}`;
+
+         const isValid = otpService.verifyOtp(hashOtp,data);
+
+         if(!isValid){
+            res.status(400).json({message : "InValid OTP"})
+         }
+
+         let user;
+         let accessToken;
+         let refreshToken;
+         
+
+     }
 }
 
 module.exports = new AuthController(); // Instantiate and export the AuthController class
