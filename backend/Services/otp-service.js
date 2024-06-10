@@ -20,8 +20,9 @@ class otpServices{
         });
     }
 
-    verifyOtp(hashedOtp, data) {             //checking sended hashed otp + original otp matches
-        return hashedOtp === data;
+     verifyOtp(hashedOtp, data) {             //checking sended hashed otp + original otp matches
+        let computedHash = hashService.hashOtp(data);
+        return computedHash === hashedOtp;
     }
 }
 
