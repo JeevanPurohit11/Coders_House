@@ -24,31 +24,31 @@ class AuthController {
         //sending live OTP
         try{
             await otpServices.sendBySms(phone,otp);
-             res.json({
+            return res.json({
                 hash : `${hash}.${expire}`,
                 phone,
             })
         }catch(err){
             console.log(err);
-            res.status(500).json({message : 'message sending failed'});
+           return res.status(500).json({message : 'message sending failed'});
         }
 
-
-        // res.json({ hash : hash}); // Send response if phone number is provided
+    //   let x=  crypto.randomBytes(64).toString('hex');
+    //      res.json({ x : x}); // Send response if phone number is provided
 
 
      //HASHING OF OTP
     } 
     
-    //verify OTP
-    verifyOtp(req,res){
+  //  verify OTP
+  async  verifyOtp(req,res){
          const { otp, hash, phone }= req.body;
          if(!otp || !hash || !phone) {
-            res.status(400).json({message : "All fields are required. "});
+          return res.status(400).json({message : "All fields are required. "});
          }
          const [hashOtp , expire]= hash.split('.');
          if(Date.now() > +expire){                                         // + convert into time (int) not a string
-            res.status(400).json({message : "OTP expired."})
+           return  res.status(400).json({message : "OTP expired."})
          }
 
          const data = `${phone}.${otp}.${expire}`;
@@ -56,27 +56,32 @@ class AuthController {
          const isValid = otpService.verifyOtp(hashOtp,data);
 
          if(!isValid){
-            res.status(400).json({message : "InValid OTP"})
+           return res.status(400).json({message : "InValid OTP"})
          }
 
          let user;
-         let accessToken;
-         let refreshToken;
-         
+         // in Js when key ans pair both are same we can write in single ({phone})
          try{
-              user = await userService.findUser({phone : phone }) ;  // in Js when key ans pair both are same we can write in single ({phone})
+              user = await userService.findUser({phone : phone }) ;  
               if(!user){
                    user =await userService.createUser({phone : phone});
               }   
          }catch(err){
              console.log(err);
-             res.status(500).json({message : 'DB error.'});
+            return res.status(500).json({message : 'DB error.'});
          }
 
          //token generating (JWT) javascript web token .(we doesnt have session here ,both frontend and backend are not connected , 
-       //  so if we have token then we can logined in ,on each request we will send this token on server )
+       //  . if we have token then we can logined in ,on each request we will send this token on server )
        // and server verify it ,if verified then server will send protected data to us .
+        const {accessToken, refreshToken} = tokenService.generateTokens({ _id : user._id, activated : false});
+//token valid for 1 month 30 days
+        res.cookie('refreshToken',refreshToken, {
+            maxAge : 1000 *60 * 60* 24 * 30,
+            httpOnly : true,
+        });
 
+        return res.json({accessToken});
      }
 }
 
