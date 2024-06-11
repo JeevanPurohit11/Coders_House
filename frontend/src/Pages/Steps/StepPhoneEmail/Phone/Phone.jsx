@@ -3,15 +3,20 @@ import Card from '../../../../Components/Shared/Card/Card';
 import Button from '../../../../Components/Shared/Button/Button';
 import TextInput from '../../../../Components/Shared/TextInput/TextInput';
 import Styles from '../StepPhoneEmail.module.css';
-import { sendOtp } from '../../../../Components/Shared/http';   //{} beacuse not default export 
+import { sendOtp } from '../../../../Components/Shared/http/index';   //{} beacuse not default export 
+import { useDispatch } from 'react-redux'; //hook
+import { setOtp } from '../../../../Store/authSlice';
+
+
 
 //onNext is a function which we can call from our parent component which is this case is StepPhoneEmail.jsx
 const Phone = ({onNext}) => {
 
   const [phoneNumber,setPhoneNumber]=useState('');
    async function submit(){                          //bacially api call return promise
-        const res= await sendOtp({phone : phoneNumber});
-        console.log(res);
+        const {data}= await sendOtp({ phone : phoneNumber});
+        console.log(data);
+        dispatch(setOtp ({phone : data.phone,hash : data.hash}));
         //onNext();
     }
     return (
