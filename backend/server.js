@@ -1,22 +1,28 @@
-require('dotenv').config();  // (1) We can use all credentials available in .env
-const express = require('express');  // (2) Imported express
-const app = express();  // (3) Called
-const PORT = process.env.PORT || 5500; // (4) If given port by env is not available, run our server on PORT 5500
-const bodyParser = require('body-parser');  //imported
-const DbConnect = require('./database');   // connecting DB with server
+require('dotenv').config();  // Use credentials from .env file
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 5500;
+const bodyParser = require('body-parser');
+const DbConnect = require('./database');
+const cors = require('cors');
 
-DbConnect();   // connected
+const corsOptions = {
+    origin: ['http://localhost:3000'],  // Allow requests from the frontend
+};
 
-// Creating the route. Rather than giving logic here, I will implement logic in another file and use it here.
+app.use(cors(corsOptions));
+app.use(bodyParser.json());  // Enable JSON middleware
+
+// Connect to the database
+DbConnect();
+
+// Basic route for testing
 app.get('/', (req, res) => {
-  res.send('Hello from express Js');
+    res.send('Hello from express Js');
 });
 
-app.use(bodyParser.json());  // enable json middlever ,which come inbuild in express
-
-// Import router
+// Import and use router
 const router = require('./routes');
-app.use(router);  // Registered router (now express knows this router exists)
+app.use('/api', router);  // Prefix the routes with /api
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));  // (5) Print this message when server runs (server has been created in this 5 lines)
-//3 : 13 : 00
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
