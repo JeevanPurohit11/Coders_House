@@ -3,10 +3,20 @@ import Styles from './StepOtp.module.css'
 import Card from '../../../Components/Shared/Card/Card';
 import TextInput from '../../../Components/Shared/TextInput/TextInput';
 import Button from '../../../Components/Shared/Button/Button';
+import { verifyOtp } from '../../../Components/Shared/http';
+import { useSelector } from 'react-redux';  // hook to obtain data from local state
 
 const StepOtp = ({onNext}) => {
   const [otp,setOtp] = useState('');
-function next(){}
+  const {phone,hash}= useSelector((state)=> state.auth.otp);
+async function submit(){
+    try{
+      const {data} = await verifyOtp(otp,phone,hash);
+      console.log(data);
+    }catch(err){
+      console.log(err);
+    }
+ }
   
   return (
     <>
@@ -16,7 +26,7 @@ function next(){}
             <TextInput value={otp} onChange={(e)=>setOtp(e.target.value)}/> 
         <div>
           <div className={Styles.actionButtonWrap}>
-             <Button onClick={next} text="Next " />
+             <Button onClick={submit} text="Next " />
           </div>
           <p className={Styles.buttonParagraph}>
                    By entering your number, you’re agreeing to our Terms of Service and Privacy Policy. Thanks!
