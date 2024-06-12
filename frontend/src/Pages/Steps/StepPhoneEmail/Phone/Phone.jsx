@@ -14,10 +14,11 @@ const Phone = ({onNext}) => {
 
   const [phoneNumber,setPhoneNumber]=useState('');
    async function submit(){                          //bacially api call return promise
+         if(!phoneNumber) return;
         const {data}= await sendOtp({ phone : phoneNumber});
         console.log(data);
-        dispatch(setOtp ({phone : data.phone,hash : data.hash}));
-        //onNext();
+        dispatch(setOtp({phone : data.phone,hash : data.hash}));
+        onNext();
     }
     return (
         <div >
@@ -36,6 +37,6 @@ const Phone = ({onNext}) => {
           
         </div>
       );
-}
+};
 
 export default Phone
