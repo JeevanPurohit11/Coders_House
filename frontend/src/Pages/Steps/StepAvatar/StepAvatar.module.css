@@ -1,0 +1,33 @@
+.subHeading{
+    color : #c4c5c5;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+ /* (overflow)=>big size image will not come out from circle of our avatar */
+.avatarWrapper{
+   width: 110px;
+   height: 110px;
+   border: 6px solid #0077ff;
+   border-radius: 50%; 
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;     
+}
+/* as we are given height and width so our image will get Strach , using objectFit it will be not Strench image*/
+.avatarImage{
+    height: 90%;
+    width: 90%;
+    object-fit: cover;
+}
+/* hidding our input */
+.avatarInput{
+    display: none;
+}
+.avatarLabel{
+    color: #0077ff;
+    margin : 30px 0;
+    display: inline-block; 
+    cursor: pointer;
+}
