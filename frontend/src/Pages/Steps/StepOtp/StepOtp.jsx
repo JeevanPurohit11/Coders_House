@@ -3,12 +3,14 @@ import Styles from './StepOtp.module.css'
 import Card from '../../../Components/Shared/Card/Card';
 import TextInput from '../../../Components/Shared/TextInput/TextInput';
 import Button from '../../../Components/Shared/Button/Button';
-import { verifyOtp } from '../../../Components/Shared/http';
+import { verifyOtp } from '../../../http'
+import { sendOtp } from '../../../http';
 import { useSelector } from 'react-redux';  // hook to obtain data from local state
 import { setAuth } from '../../../Store/authSlice';
 import { useDispatch } from 'react-redux';
 
-const StepOtp = ({onNext}) => {
+
+const StepOtp = ({ onNext }) => {
   const [otp,setOtp] = useState('');
   const dispatch = useDispatch();
   const {phone,hash}= useSelector((state)=> state.auth.otp);
@@ -18,7 +20,9 @@ async function submit(){
       const {data} = await verifyOtp({otp,phone,hash});
       console.log(data);
       dispatch(setAuth(data));
-      onNext();
+      if (onNext) {
+        onNext();
+    }
     }catch(err){
       console.log(err);
     }
