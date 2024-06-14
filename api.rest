@@ -11,8 +11,8 @@ Content-Type: application/json
 
 {
     "phone": "+918758933385",
-    "otp": "2947",
-    "hash": "38994d2e8b20d442ed618c294773d25b4a1bb00366d6423afd9dd2453a6ac0c2.1718031839429"
+    "otp": "6435",
+    "hash": "9f378ac0bf0801e88bd11d64c6126560771c6bb45940d1e6887f1ccb8138aeb0.1718348012058"
 }
 
 # "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjY2ZmE2MmNmMWIxM2M2N2I3Yjk2YjgiLCJhY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE3MTgwMzE3NjEsImV4cCI6MTcxODAzNTM2MX0.TwRt0GrDQF7k1djIRhEjYyxGHM7cKxISHq8RjLCNILY"
