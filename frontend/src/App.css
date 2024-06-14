@@ -47,3 +47,10 @@ body {
     max-width: 90%;   /* for use in phone also flexible*/ 
     margin: 0 auto;
 }
+.cardWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh-140px);
+}
+/*1 : 5: 04*/
