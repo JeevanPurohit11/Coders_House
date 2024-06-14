@@ -1,5 +1,5 @@
-const moongose = require('mongoose');
-const Schema = moongose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 //schema gives blueprint of how our data store in our database;(created schema)
 const userSchema= new Schema({
@@ -11,4 +11,4 @@ const userSchema= new Schema({
   }
 );
                            //model Name , used Schema , table/connection name
-module.exports = moongose.model('User',userSchema,'users');
+module.exports = mongoose.model('User',userSchema,'users');

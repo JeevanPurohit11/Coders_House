@@ -1,9 +1,11 @@
-const otpServices = require('../Services/otp-service')
 const hashService = require('../Services/hash-services')
 const crypto = require('crypto');
 const otpService = require('../Services/otp-service');
 const userService = require('../Services/user-service');
 const tokenService = require('../Services/token-services');
+const UserDto = require('../dtos/user-dto');
+const router =require('../routes');
+
 
 class AuthController {
 
@@ -13,7 +15,7 @@ class AuthController {
         if (!phone) { // Check if phone number is provided
             return res.status(400).json({ message: 'phone field is required' }); 
         }
-        const otp= await otpServices.generateOtp();     // recieved promise
+        const otp= await otpService.generateOtp();     // recieved promise
         
         const TTL = 1000 * 60 * 2 //2 minute;
         const expire= Date.now() + TTL ;  // otp activation time
@@ -23,11 +25,11 @@ class AuthController {
          
         //sending live OTP
         try{
-            //await otpServices.sendBySms(phone,otp);
+           // await otpService.sendBySms(phone,otp);
             return res.json({
                 hash : `${hash}.${expire}`,
-                phone,
-                otp,
+                phone: phone,
+                otp: otp,
             })
         }catch(err){
             console.log(err);
@@ -77,12 +79,20 @@ class AuthController {
        // and server verify it ,if verified then server will send protected data to us .
         const {accessToken, refreshToken} = tokenService.generateTokens({ _id : user._id, activated : false});
 //token valid for 1 month 30 days
+
+        await tokenService.storeRefreshToken(refreshToken,user._id);
+        
         res.cookie('refreshToken',refreshToken, {
             maxAge : 1000 *60 * 60* 24 * 30,
             httpOnly : true,
         });
-
-        return res.json({accessToken});
+        res.cookie('accessToken',accessToken, {
+            maxAge : 1000 *60 * 60* 24 * 30,
+            httpOnly : true,
+        });
+         
+        const userDto= new UserDto(user);
+        return res.json({user : userDto, auth : true});
      }
 }
 
