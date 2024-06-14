@@ -1,32 +1,31 @@
-//action or reducer is same
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isAuth: false,
-  user : null,
-  otp : {
-    hash : '',
-    phone : '',
+  user: null,
+  otp: {
+    phone: '',
+    hash: '',
   },
-
-}
+};
 
 export const authSlice = createSlice({
-  name: 'counter',
+  name: 'auth',
   initialState,
   reducers: {
-    setAuth: (state,action) => {
-    
+    setAuth: (state, action) => {
+      const { user } = action.payload;
+      state.user = user;
+      state.isAuth = user !== null; // Update isAuth based on whether user is null or not
     },
-    setOtp: (state,action) => {
-         const {phone ,hash}= action.payload;
-         state.otp.phone=phone;
-         state.otp.hash=hash;
+    setOtp: (state, action) => {
+      const { phone, hash } = action.payload;
+      state.otp.phone = phone;
+      state.otp.hash = hash;
     },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { setAuth,setOtp } = authSlice.actions
+export const { setAuth, setOtp } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;
