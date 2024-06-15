@@ -3,19 +3,26 @@ const express = require('express');
 const app = express();
 const DbConnect = require('./database');
 const cors = require('cors');
+const cookieParser=require('cookie-parser');
 // Connect to the database
 DbConnect();
+
+app.use(cookieParser());
+// Define CORS options
+const corsOptions = {
+    credentials: true,                 // for getting cookie/tokens easily
+    origin: 'http://localhost:3000',  // Allow requests from the frontend
+};
+// Use CORS middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));  // Handle preflight requests(chatgpt)
+
+app.use(express.json({limit : '8mb'}));  // Enable JSON middleware // limit for max size length of avatar/image
+
 // Import and use router
 const router = require('./routes');
 app.use(router);  // Prefix the routes with /api
 
-const corsOptions = {
-    Credential : true,                 //for getting cookie //tokens easily
-    origin: ['http://localhost:3000'],  // Allow requests from the frontend
-};
-
-app.use(cors(corsOptions));
-app.use(express.json());  // Enable JSON middleware
 
 
 // Basic route for testing

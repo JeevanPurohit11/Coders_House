@@ -1,19 +1,19 @@
-# POST http://localhost:5500/api/send-otp HTTP/1.1
-# Content-Type: application/json
-
-# {
-#     "phone": "+918758933385"
-# }
- 
-
-POST http://localhost:5500/api/verify-otp HTTP/1.1
+POST http://localhost:5500/api/send-otp HTTP/1.1
 Content-Type: application/json
 
 {
-    "phone": "+918758933385",
-    "otp": "6435",
-    "hash": "9f378ac0bf0801e88bd11d64c6126560771c6bb45940d1e6887f1ccb8138aeb0.1718348012058"
+    "phone": "+918758933385"
 }
+ 
+
+# POST http://localhost:5500/api/verify-otp HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "phone": "+918758933385",
+#     "otp": "6435",
+#     "hash": "9f378ac0bf0801e88bd11d64c6126560771c6bb45940d1e6887f1ccb8138aeb0.1718348012058"
+# }
 
 # "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjY2ZmE2MmNmMWIxM2M2N2I3Yjk2YjgiLCJhY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE3MTgwMzE3NjEsImV4cCI6MTcxODAzNTM2MX0.TwRt0GrDQF7k1djIRhEjYyxGHM7cKxISHq8RjLCNILY"
 # Set-Cookie: refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjY2ZmE2MmNmMWIxM2M2N2I3Yjk2YjgiLCJhY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE3MTgwMzE3NjEsImV4cCI6MTc0OTU4OTM2MX0.fgL0NBE2K97yvljdD-4j8JITmtJp5e9dvTXcBeMLpvY; Max-Age=2592000; Path=/; Expires=Wed, 10 Jul 2024 15:02:41 GMT; HttpOnly
