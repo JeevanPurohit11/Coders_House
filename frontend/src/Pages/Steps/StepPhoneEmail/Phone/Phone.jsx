@@ -25,7 +25,8 @@ const Phone = ({ onNext }) => {
   return (
     <div>
       <Card title="Enter Your Phone Number " icon="phone.png">
-        <TextInput value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        <TextInput value={phoneNumber} onChange={(e)  => {console.log(e); setPhoneNumber(e.target.value)}} />
+         
         <div>
           <div className={Styles.actionButtonWrap}>
             <Button onClick={submit} text="Next " />
