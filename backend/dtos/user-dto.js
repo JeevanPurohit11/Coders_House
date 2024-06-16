@@ -1,6 +1,6 @@
 //to get only properties which we what from whole bunch of properties
 class UserDto{
-    _id;           //we can also use id = _id 
+    id;           //we can also use id = _id 
     phone;
     name;
     avatar;
@@ -8,7 +8,7 @@ class UserDto{
     createdAt;
 
     constructor(user){
-        this._id=user._id;
+        this.id=user.id;
         this.phone=user.phone;
         this.name = user.name;
         this.avatar= user.avatar ? `${process.env.BASE_URL}${user.avatar}` : null;

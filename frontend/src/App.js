@@ -7,11 +7,13 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Authenticate from './Pages/Authenticate/Authenticate';
 import Activate from './Pages/Activate/Activate';
 import Rooms from './Pages/Rooms/Rooms'
+import { useSelector } from 'react-redux';
 
-const isAuth = false;    //IS user logged in or not 
-const user={             // IS user has fill actvate detials(like profile picture + full name )
-   activated : false,
-}
+// defined below dynamically
+// const isAuth = false;    //IS user logged in or not 
+// const user={             // IS user has fill actvate detials(like profile picture + full name )
+//    activated : false,
+// }
 
 function App() {
    return (
@@ -49,6 +51,7 @@ function App() {
 }
 
 const GuestRoute = ({ children }) => {
+  const {isAuth}= useSelector((state)=>state.auth);  //taking value from local store.
   return isAuth ? (
     <Navigate to="/rooms" />
   ) : (
@@ -57,6 +60,7 @@ const GuestRoute = ({ children }) => {
 };
 
 const SemiProtectedRoute= ({children})=>{
+  const {user,isAuth}= useSelector((state)=>state.auth);
    return isAuth ? (
       <Navigate to ="/" />
    ) : isAuth && !user.activated ? (
@@ -67,6 +71,7 @@ const SemiProtectedRoute= ({children})=>{
 }
 
 const ProtectedRoute=()=>{
+  const {user,isAuth}= useSelector((state)=>state.auth);
   return !isAuth ? ( 
         <Navigate to ="/" />             //user only login
   ) : isAuth && !user.activated ? (      //user login but not fill details (full name and profile pic.(so navigate to activate page ))
@@ -77,3 +82,5 @@ const ProtectedRoute=()=>{
 } 
 
 export default App;
+
+//step otp 4 : 44 
