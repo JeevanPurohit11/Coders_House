@@ -4,25 +4,23 @@ import Card from '../../../Components/Shared/Card/Card';
 import TextInput from '../../../Components/Shared/TextInput/TextInput';
 import Button from '../../../Components/Shared/Button/Button';
 import { verifyOtp } from '../../../http'
-import { sendOtp } from '../../../http';
 import { useSelector } from 'react-redux';  // hook to obtain data from local state
 import { setAuth } from '../../../Store/authSlice';
 import { useDispatch } from 'react-redux';
 
 
-const StepOtp = ({ onNext }) => {
+const StepOtp = () => {
   const [otp,setOtp] = useState('');
   const dispatch = useDispatch();
   const {phone,hash}= useSelector((state)=> state.auth.otp);
 
 async function submit(){
+  if (!otp || !phone || !hash) return;
     try{
       const {data} = await verifyOtp({otp,phone,hash});
       console.log(data);
       dispatch(setAuth(data));
-      if (onNext) {
-        onNext();
-    }
+     //onNext() doesnt require directly check using store in global store . and render.
     }catch(err){
       console.log(err);
     }
@@ -48,4 +46,4 @@ async function submit(){
   );
 }
 
-export default StepOtp
+export default StepOtp;
