@@ -12,7 +12,7 @@ const Phone = ({ onNext }) => {
     const dispatch = useDispatch();
 
     async function submit() {
-      //  if (!phoneNumber) return;
+        if (!phoneNumber) return;
       try {
         const { data } = await sendOtp({ phone: phoneNumber });
         console.log(data);
@@ -25,7 +25,7 @@ const Phone = ({ onNext }) => {
   return (
     <div>
       <Card title="Enter Your Phone Number " icon="phone.png">
-        <TextInput value={phoneNumber} onChange={(e)  => {console.log(e); setPhoneNumber(e.target.value)}} />
+        <TextInput value={phoneNumber} onChange={(e)  => {setPhoneNumber(e.target.value)}} />
          
         <div>
           <div className={Styles.actionButtonWrap}>

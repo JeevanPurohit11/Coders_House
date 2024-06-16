@@ -3,6 +3,7 @@ import styles from './Home.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../Components/Shared/Card/Card';
 import Button from '../../Components/Shared/Button/Button';
+import authenticate from '../Authenticate/Authenticate';
 
 const Home = () => {
   const navigate = useNavigate();
