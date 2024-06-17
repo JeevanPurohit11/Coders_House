@@ -4,9 +4,12 @@ import Button from '../../../Components/Shared/Button/Button';
 import Card from '../../../Components/Shared/Card/Card';
 import { useSelector , useDispatch } from 'react-redux';  //help to fetch data from store.(local)
 import { setAvatar } from '../../../Store/activateSlice';
+import { setAuth } from '../../../Store/authSlice';
+import {activate} from '../../../http'
 
 const StepAvatar = ({onNext}) => {
-  const {name} =useSelector((state)=>state.activate);
+  const dispatch= useDispatch();
+  const {name, avatar} =useSelector((state)=>state.activate);
   const [image,setImage]=useState('../../../../public/images/monkey-avatar.png');
 
  async function submit(){
@@ -17,17 +20,18 @@ const StepAvatar = ({onNext}) => {
            console.log(err);
        }
   }
-  function captureImage(){
-      const file=e.target.file[0];
-      const reader= new FileReader();
-      reader.readAsDataURL(file);    //read file of image it take time , so we use onloadend then work below function
+  //file is array type element and [0] is name of our file which was upload by us
+  function captureImage(e){
+      const file=e.target.files[0];
+      const reader= new FileReader();    //file reader api
+      reader.readAsDataURL(file);    //read file of image it take time , so we use waiting for let it load first = onloadend then work below function
       reader.onloadend= function(){
-           console.log(reader.result);
+       //    console.log(reader.result); // our photo in string base 64 format 
            setImage(reader.result);   // store in local
            dispatch(setAvatar(reader.result));
 
       }
-      console.log(e);
+     // console.log(e);
   }
   //dynamically taking the name of user 
   return (
