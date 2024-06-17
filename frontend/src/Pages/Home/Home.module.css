@@ -32,9 +32,11 @@
     justify-content: center;
     margin-top: 5rem;               /*for taking box to down*/
 }
+
 .signInWrapper{
     margin-top: 20px;
 }
+
 .hasInvite{
     color: #0077FF;
 }

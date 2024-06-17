@@ -3,3 +3,6 @@
     text-align: center;
     margin: 20px auto;
 }
+.cardWrapper{
+    composes : cardWrapper from '../../../App.css'
+}

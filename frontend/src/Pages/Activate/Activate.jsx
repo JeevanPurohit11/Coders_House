@@ -3,7 +3,6 @@ import Styles from './Activate.module.css'
 import StepName from '../Steps/StepName/StepName'
 import StepAvatar from '../Steps/StepAvatar/StepAvatar';
 
-
 const steps = {
    1 : StepName,
    2 : StepAvatar,
@@ -18,10 +17,10 @@ const Activate = () => {
   }
 
   return (
-    <div className='cardWrapper'>
+    <div className="cardWrapper">
         <Step onNext={onNext}></Step>
     </div>
   )
 }
 
-export default Activate
+export default Activate;
