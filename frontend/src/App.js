@@ -1,23 +1,52 @@
-import './App.css';
+import React from 'react';
 import Home from './Pages/Home/Home';
 import Navigation from './Components/Shared/Navigation/Navigation';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-// import Register from './Pages/Register/Register';
-// import Login from './Pages/Login/Login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Authenticate from './Pages/Authenticate/Authenticate';
 import Activate from './Pages/Activate/Activate';
 import Rooms from './Pages/Rooms/Rooms'
 import { useSelector } from 'react-redux';
+import './App.css'
 
-// defined below dynamically
-// const isAuth = false;    //IS user logged in or not 
-// const user={             // IS user has fill actvate detials(like profile picture + full name )
-//    activated : false,
-// }
+// // defined below dynamically
+// // const isAuth = false;    //IS user logged in or not 
+// // const user={             // IS user has fill actvate detials(like profile picture + full name )
+// //    activated : false,
+// // }
+
+const GuestRoute = ({ children }) => {
+  const {isAuth}= useSelector((state)=>state.auth);  //taking value from local store.
+  console.log(isAuth);
+ // console.log(user);
+ return isAuth ? <Navigate to="/activate" /> : children;
+};
+
+const SemiProtectedRoute= ({children})=>{
+  const { user,isAuth }= useSelector((state)=>state.auth);
+   return !isAuth ? (
+      <Navigate to ="/" />
+   ) : !user.activated ? (
+      children
+   ) : (
+      <Navigate to ="/rooms" />
+   );
+}
+
+const ProtectedRoute=()=>{
+  const {user,isAuth}= useSelector((state)=>state.auth);
+
+  return !isAuth ? ( 
+        <Navigate to ="/" />             //user only login
+  ) : !user.activated ? (      //user login but not fill details (full name and profile pic.(so navigate to activate page ))
+        <Navigate to ="/activate" />
+  ) : (
+    children                // the things inbetween our Protected component will be display.(i.e ) rooms component 
+  )                                   // if children login and activated so directly navigate to rooms page
+} 
 
 function App() {
    return (
-      <BrowserRouter>
+      <Router>
         <Navigation />
         {/* For each page we have different routes, and we require navigation in all so we use it above */}
         <Routes>
@@ -46,41 +75,9 @@ function App() {
               </ProtectedRoute>
             }/>
         </Routes>
-      </BrowserRouter>
+      </Router>
    );
 }
 
-const GuestRoute = ({ children }) => {
-  const {isAuth}= useSelector((state)=>state.auth);  //taking value from local store.
-  return isAuth ? (
-    <Navigate to="/rooms" />
-  ) : (
-    children
-  );
-};
-
-const SemiProtectedRoute= ({children})=>{
-  const {user,isAuth}= useSelector((state)=>state.auth);
-   return isAuth ? (
-      <Navigate to ="/" />
-   ) : isAuth && !user.activated ? (
-      children
-   ) : (
-      <Navigate to ="/rooms" />
-   )
-}
-
-const ProtectedRoute=()=>{
-  const {user,isAuth}= useSelector((state)=>state.auth);
-  return !isAuth ? ( 
-        <Navigate to ="/" />             //user only login
-  ) : isAuth && !user.activated ? (      //user login but not fill details (full name and profile pic.(so navigate to activate page ))
-        <Navigate to ="/activate" />
-  ) : (
-    children                // the things inbetween our Protected component will be display.(i.e ) rooms component 
-  )                                   // if children login and activated so directly navigate to rooms page
-} 
-
 export default App;
 
-//step otp 4 : 44 
