@@ -7,7 +7,7 @@ import { setAvatar } from '../../../Store/activateSlice';
 
 const StepAvatar = ({onNext}) => {
   const {name} =useSelector((state)=>state.activate);
-  const [image,setImage]=useState('/images/monkey-avatar.png');
+  const [image,setImage]=useState('../../../../public/images/monkey-avatar.png');
 
  async function submit(){
        try{
@@ -29,9 +29,10 @@ const StepAvatar = ({onNext}) => {
       }
       console.log(e);
   }
+  //dynamically taking the name of user 
   return (
     <>
-    <Card title={`Okay , ${name}`} icon="monkey-emoji.png">
+    <Card title={`Okay , ${name}`} icon="monkey-emoji.png">   
     <p className={Styles.subHeading}>How's this Photo ? </p>
 
     <div className={Styles.avatarWrapper}>
@@ -50,6 +51,6 @@ const StepAvatar = ({onNext}) => {
 </Card>
 </>
   );
-}
+};
 
 export default StepAvatar

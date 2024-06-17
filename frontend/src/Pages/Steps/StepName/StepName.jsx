@@ -18,20 +18,21 @@ const StepName = ({onNext}) => {
     onNext();
   }
   return (
-    <>
-          <Card title="What’s your full name? " icon="google-emoji.png">
+    <>  
+    <div className={Styles.cardWrapper}>
+          <Card title="What’s your full name? " icon="goggle-emoji.png">
             {/* set phone number as we receieve ,we will get number from input and set that number useing setPhoneNumber */}
             <TextInput value={fullName} onChange={(e)=>setFullName(e.target.value)}/> 
-        <div>
+        
         <p className={Styles.paragraph}>
           People use real names at codershouse :) 
           </p>
-          <div >
+            <div>
              <Button onClick={nextStep} text="Next " />
           </div>
         
-        </div>
       </Card>
+      </div>
     </>
   );
 }
