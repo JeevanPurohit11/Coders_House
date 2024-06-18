@@ -1,16 +1,16 @@
 const tokenServices = require("../Services/token-services");
 
-// work in between our reuest and response if middleware allow then only further thing works(request and response)
+// work in between our request and response if middleware allow then only further thing works(request and response)
 module.exports= async function(req,res,next) {
      
     try{
-       const {accessToken} = req.cookies;
+       const accessToken = req.cookies.accessToken;
        if(!accessToken){
-           throw new Error();
+        return res.status(401).json({ message: 'Access token is required' });
        }
-       const {userData} = tokenServices.verifyAccessToken(accessToken);
+       const {userData} = await tokenServices.verifyAccessToken(accessToken);
        if(!userData){
-          throw new Error();
+           return res.status(401).json({ message: 'Invalid access token' });
        }
        req.user= userData;    // taking only id of user from all data 
 
@@ -20,5 +20,5 @@ module.exports= async function(req,res,next) {
     }catch(err){
         res.status(401).json({message : 'Invalid Token'});
     }
-    next();
+   
 }
