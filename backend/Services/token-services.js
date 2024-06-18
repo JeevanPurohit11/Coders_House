@@ -24,7 +24,11 @@ class TokenService {
           }
     }
     async verifyAccessToken(token){
-        jwt.verify(token, accessTokenSecret);
+        try {
+            return jwt.verify(token, accessTokenSecret);
+        } catch (err) {
+            throw new Error('Token verification failed');
+        }
     }
 }
 

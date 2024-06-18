@@ -10,15 +10,19 @@ import {activate} from '../../../http'
 const StepAvatar = ({onNext}) => {
   const dispatch= useDispatch();
   const {name, avatar} =useSelector((state)=>state.activate);
-  const [image,setImage]=useState('../../../../public/images/monkey-avatar.png');
+  const [image,setImage]=useState('/images/monkey-avatar.png');
 
  async function submit(){
        try{
           const {data}= await activate({name , avatar});
+          if(data.auth){
+            dispatch(setAuth(data));
+          }
           console.log(data);
        }catch(err){
            console.log(err);
        }
+     //  onNext();
   }
   //file is array type element and [0] is name of our file which was upload by us
   function captureImage(e){
@@ -40,7 +44,7 @@ const StepAvatar = ({onNext}) => {
     <p className={Styles.subHeading}>How's this Photo ? </p>
 
     <div className={Styles.avatarWrapper}>
-        <img className={Styles.avatarImage} src="image" alt="avatar" />
+        <img className={Styles.avatarImage} src={image} alt="avatar" />
     </div>
     {/* connecting input and label our label with hide input , we not have to so input only have to show label , will clicking on label indirectly we redirect to input only it will be at back to label(label hide input ) */}
     <div>

@@ -81,3 +81,4 @@ function App() {
 
 export default App;
 
+//1: 24 + image not loading 
