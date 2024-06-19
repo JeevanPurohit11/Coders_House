@@ -21,9 +21,7 @@ class ActivateController{
 //converting image in small size.
        try {
         const jimResp = await Jimp.read(buffer);
-        jimResp
-            .resize(150, Jimp.AUTO)
-            .write(path.resolve(__dirname, `../storage/${imagePath}`));
+        await jimResp.resize(150, Jimp.AUTO).writeAsync(path.resolve(__dirname, `../storage/${imagePath}`)); // Use writeAsync for Promise-based resolution
         } catch (err) {
            return res.status(500).json({ message: 'Could not process the image' });
         }
@@ -39,7 +37,7 @@ class ActivateController{
                 user.activated=true;
                 user.name =name;
                 user.avatar= `/storage/${imagePath}`;
-                user.save();     // all above thing now will store in our database.
+                await user.save();     // all above thing now will store in our database.
                return res.json({user : new userDto(user), auth : true});
             }catch(err){
                return res.status(500).json({ message: 'something went wrong while storing data inside DB' });
