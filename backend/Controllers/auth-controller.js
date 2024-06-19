@@ -77,7 +77,7 @@ class AuthController {
          //token generating (JWT) javascript web token .(we doesnt have session here ,both frontend and backend are not connected , 
        //  . if we have token then we can logined in ,on each request we will send this token on server )
        // and server verify it ,if verified then server will send protected data to us .
-        const {accessToken, refreshToken} = tokenService.generateTokens({ _id : user._id, activated : false});
+        const {accessToken, refreshToken} =  tokenService.generateTokens({ _id : user._id, activated : false});
 //token valid for 1 month 30 days
 
         await tokenService.storeRefreshToken(refreshToken,user._id);
@@ -94,6 +94,26 @@ class AuthController {
         const userDto= new UserDto(user);
         return res.json({user : userDto, auth : true});
      }
+
+     async refresh(req,res){
+         // get refresh token from cookie
+       const { refreshToken: refreshTokenFromCookie } = req.cookies;
+        // check if token is valid
+        let userData;
+        try {
+            userData = await tokenService.verifyRefreshToken(
+                refreshTokenFromCookie
+            );
+        } catch (err) {
+            return res.status(401).json({ message: 'Invalid Token' });
+        }
+          // Check if token is in db
+          //generate new tokens
+          //put in cookie
+          //refresh
+
+
+        }
 }
 
 module.exports = new AuthController(); // Instantiate and export the AuthController class
