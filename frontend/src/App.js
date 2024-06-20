@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './Pages/Home/Home';
 import Navigation from './Components/Shared/Navigation/Navigation';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import Activate from './Pages/Activate/Activate';
 import Rooms from './Pages/Rooms/Rooms'
 import { useSelector } from 'react-redux';
 import './App.css'
+import {useLoadingWithRefresh} from './hooks/useLoadingWithRefresh';
+
 
 // // defined below dynamically
 // // const isAuth = false;    //IS user logged in or not 
@@ -32,7 +34,7 @@ const SemiProtectedRoute= ({children})=>{
    );
 }
 
-const ProtectedRoute=()=>{
+const ProtectedRoute=({children})=>{
   const {user,isAuth}= useSelector((state)=>state.auth);
 
   return !isAuth ? ( 
@@ -45,7 +47,12 @@ const ProtectedRoute=()=>{
 } 
 
 function App() {
-   return (
+  // call refresh endpoint
+  const { loading } = useLoadingWithRefresh();
+
+  return loading ? (
+     "Loading, please wait.."
+  ) : (
       <Router>
         <Navigation />
         {/* For each page we have different routes, and we require navigation in all so we use it above */}
