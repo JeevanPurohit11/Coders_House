@@ -147,8 +147,19 @@ class AuthController {
         });
         // response
         const userDto = new UserDto(user);
-        res.json({ user: userDto, auth: true });
+        res.json({ user: userDto, auth: true }); //when we are doing refresh of page this data has been send to user.
     }
+
+    async logout(req,res){
+        //delete refresh token from db
+        await tokenService.removeToken(refreshToken);
+
+        //delete refresh token from cookies
+        res.clearCookie('refreshToken');
+        res.clearCookie('accessToken');
+        res.json({ user: null, auth: false });  //this time we return user as null
+    }
+
 
 }
 
