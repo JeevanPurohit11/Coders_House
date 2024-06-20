@@ -8,15 +8,16 @@ module.exports= async function(req,res,next) {
        if(!accessToken){
         return res.status(401).json({ message: 'Access token is required' });
        }
-      console.log(accessToken);
-       const {userData} =  tokenServices.verifyAccessToken(accessToken);
-    //    if(!userData){
-    //        return res.status(401).json({ message: 'Invalid access token' });
-    //    }
-    //    req.user= userData;    // taking only id of user from all data //// Attach user data to request object for further processing 
+       console.log("accessToken->->"+ accessToken);
+
+       const userData = await tokenServices.verifyAccessToken(accessToken);
+       if(!userData){
+           return res.status(401).json({ message: 'Invalid access token' });
+       }
+       req.user= userData;    // taking only id of user from all data //// Attach user data to request object for further processing 
 
       
-       console.log(userData);
+       console.log("userData->->"+userData);
        next();   // allow to complete request or response.
     }catch(err){
         res.status(401).json({message : 'Invalid Token'});
