@@ -6,7 +6,7 @@ const refreshModel = require('../models/refresh-model');
 class TokenService {
     generateTokens(payload) {
         const accessToken = jwt.sign(payload, accessTokenSecret, {
-            expiresIn: '1h',
+            expiresIn: '1m',
         });
         const refreshToken = jwt.sign(payload, refreshTokenSecret, {
             expiresIn: '1y',
@@ -43,6 +43,10 @@ class TokenService {
             { userId: userId },  //for this userid put our new refresh token 
             { token: refreshToken }
         );
+    }
+    //for logout a user remove from db
+    async removeToken(refreshToken) {
+        return await refreshModel.deleteOne({ token: refreshToken });
     }
 }
 
