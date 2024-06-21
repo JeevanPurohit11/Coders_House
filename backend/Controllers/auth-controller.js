@@ -152,6 +152,9 @@ class AuthController {
 
     async logout(req,res){
         //delete refresh token from db
+        console.log('Logout controller hit');
+        
+        const { refreshToken } = req.cookies;
         await tokenService.removeToken(refreshToken);
 
         //delete refresh token from cookies
@@ -159,6 +162,7 @@ class AuthController {
         res.clearCookie('accessToken');
         res.json({ user: null, auth: false });  //this time we return user as null
     }
+   
 
 
 }
