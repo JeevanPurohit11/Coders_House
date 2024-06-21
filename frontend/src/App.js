@@ -8,7 +8,7 @@ import Rooms from './Pages/Rooms/Rooms'
 import { useSelector } from 'react-redux';
 import './App.css'
 import {useLoadingWithRefresh} from './hooks/useLoadingWithRefresh';
-
+import Loader from '../src/Components/Shared/Loader/Loader'
 
 // // defined below dynamically
 // // const isAuth = false;    //IS user logged in or not 
@@ -47,11 +47,12 @@ const ProtectedRoute=({children})=>{
 } 
 
 function App() {
+
   // call refresh endpoint
   const { loading } = useLoadingWithRefresh();
 
   return loading ? (
-     "Loading, please wait.."
+    <Loader message="please wait while refreshing.."/>
   ) : (
       <Router>
         <Navigation />
