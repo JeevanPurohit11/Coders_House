@@ -8,8 +8,8 @@ const Card  = ({title,icon,children})=>{
     //this thing is common in all pages so we wrapp inside a card component
     <div className={styles.card}> 
       <div className={styles.headingWrapper}>
-              <img src={`/images/${icon}`} alt='logo'/>
-              <h1 className={styles.heading}>{title}</h1>
+             {icon && <img src={`/images/${icon}`} alt='logo'/>}
+             {title && <h1 className={styles.heading}>{title}</h1>}
       </div>
          {children}
       </div>
