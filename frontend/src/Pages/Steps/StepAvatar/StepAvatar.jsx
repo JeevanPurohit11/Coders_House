@@ -6,21 +6,28 @@ import { useSelector , useDispatch } from 'react-redux';  //help to fetch data f
 import { setAvatar } from '../../../Store/activateSlice';
 import { setAuth } from '../../../Store/authSlice';
 import {activate} from '../../../http'
+import Loader from '../../../Components/Shared/Loader/Loader';
 
 const StepAvatar = ({onNext}) => {
   const dispatch= useDispatch();
   const {name, avatar} =useSelector((state)=>state.activate);
   const [image,setImage]=useState('/images/monkey-avatar.png');
+  const [loading ,setLoading] =useState(false);
+
 
  async function submit(){
-       try{
+  // if any person not upload photo then not redirect to next page
+  if(!name || !avatar) return;
+     setLoading(true);
+      try{
           const {data}= await activate({name , avatar});
           if(data.auth){
             dispatch(setAuth(data));
           }
-          console.log(data);
        }catch(err){
            console.log(err);
+       }finally{
+          setLoading(false);  // in either case it success of fail we have to stop loading .
        }
      //  onNext();
   }
@@ -37,7 +44,9 @@ const StepAvatar = ({onNext}) => {
       }
      // console.log(e);
   }
-  //dynamically taking the name of user 
+  //dynamically taking the name of user
+  
+  if(loading) return <Loader message="Activation in progess..."/>
   return (
     <>
     <Card title={`Okay , ${name}`} icon="monkey-emoji.png">   
