@@ -38,4 +38,4 @@ const StepPhoneEmail = ({onNext}) => {
    )
 }
 
-export default StepPhoneEmail
+export default StepPhoneEmail;
