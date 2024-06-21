@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom' //will clicking on normal ankor tag link
 import styles from "./Navigation.module.css";
 import { useDispatch, useSelector } from 'react-redux';
 import {logout} from  '../../../http';
-import {setAuth} from '../../../Store/authSlice';
-
+import {setAuth} from '../../../Store/authSlice'; 
 
  const Navigation = () => {
   //we have to right here style for child component ,same like inline css
@@ -32,7 +31,7 @@ import {setAuth} from '../../../Store/authSlice';
           console.log(err);
       }
   }
-
+//we use conditional rendering i.e if isAuth true then only our button will be seen (used short circuit like ternary operator), beacuse when we logout , the logout button should be disappier
   return (
     //multiple class using for single tag.
        <nav className={`${styles.navbar} container`}>   
@@ -40,7 +39,7 @@ import {setAuth} from '../../../Store/authSlice';
            <img src="/images/logo.png" alt="logo"/>
            <span style ={logoText}>Coders House</span>
         </Link>
-        <button onClick={logoutUser}>Logout</button>
+        {isAuth && <button onClick={logoutUser}>Logout</button>}
       </nav>
   );
 }
