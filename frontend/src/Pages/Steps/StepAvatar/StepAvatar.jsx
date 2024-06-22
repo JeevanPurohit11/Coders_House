@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Styles from './StepAvatar.module.css'
 import Button from '../../../Components/Shared/Button/Button';
 import Card from '../../../Components/Shared/Card/Card';
@@ -13,6 +13,7 @@ const StepAvatar = ({onNext}) => {
   const {name, avatar} =useSelector((state)=>state.activate);
   const [image,setImage]=useState('/images/monkey-avatar.png');
   const [loading ,setLoading] =useState(false);
+  const [unMounted, setUnMounted]=useState(false);
 
 
  async function submit(){
@@ -22,7 +23,10 @@ const StepAvatar = ({onNext}) => {
       try{
           const {data}= await activate({name , avatar});
           if(data.auth){
-            dispatch(setAuth(data));
+            if(!unMounted){
+              dispatch(setAuth(data));
+            }
+           
           }
        }catch(err){
            console.log(err);
@@ -46,6 +50,13 @@ const StepAvatar = ({onNext}) => {
   }
   //dynamically taking the name of user
   
+  //bug resolved
+  useEffect(()=>{
+     return ()=>{
+         setUnMounted(true);
+     };
+  },[]);
+
   if(loading) return <Loader message="Activation in progess..."/>
   return (
     <>

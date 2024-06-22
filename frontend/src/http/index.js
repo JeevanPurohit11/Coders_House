@@ -33,7 +33,7 @@ api.interceptors.response.use(
             originalRequest.isRetry = true;
             try {
                 await axios.get(
-                    "http://localhost:5500/api/refresh",   // making refresh request to server
+                    'http://localhost:5500/api/refresh',   // making refresh request to server
                     {
                         withCredentials: true,     //so our tokken will be send successfully
                     }
