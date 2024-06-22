@@ -6,7 +6,7 @@ const TextInput = ({ value, onChange }) => {
     <div>
       <input
         className={Styles.input}
-        type='text'
+        type="text"
         value={value}
         onChange={onChange}
       />
