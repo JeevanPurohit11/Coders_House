@@ -13,7 +13,7 @@ const StepAvatar = ({onNext}) => {
   const {name, avatar} =useSelector((state)=>state.activate);
   const [image,setImage]=useState('/images/monkey-avatar.png');
   const [loading ,setLoading] =useState(false);
-  const [unMounted, setUnMounted]=useState(false);
+ // const [unMounted, setUnMounted]=useState(false);
 
 
  async function submit(){
@@ -23,9 +23,9 @@ const StepAvatar = ({onNext}) => {
       try{
           const {data}= await activate({name , avatar});
           if(data.auth){
-            if(!unMounted){
+          //   if(unMounted){
               dispatch(setAuth(data));
-            }
+           // }
            
           }
        }catch(err){
@@ -51,11 +51,11 @@ const StepAvatar = ({onNext}) => {
   //dynamically taking the name of user
   
   //bug resolved
-  useEffect(()=>{
-     return ()=>{
-         setUnMounted(true);
-     };
-  },[]);
+  // useEffect(()=>{
+  //    return ()=>{
+  //        setUnMounted(true);
+  //    };
+  // },[]);
 
   if(loading) return <Loader message="Activation in progess..."/>
   return (
