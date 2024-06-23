@@ -1,19 +1,21 @@
 /* //styles inside this component only apply in navigation components not to any child component .  */
-.navbar{
+.navbar {
     padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.logoutButton{
+
+.logoutButton {
     background: none;
     cursor: pointer;
 }
 
-.navRight{
+.navRight {
     display: flex;
     align-items: center;
 }
+
 .avatar {
     border-radius: 50%;
     object-fit: cover;
