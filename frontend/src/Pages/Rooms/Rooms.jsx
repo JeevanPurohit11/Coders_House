@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Rooms.module.css";
 import RoomCard from "../../Components/RoomCard/RoomCard";
+import AddRoomModel from "../../Components/AddRoomModel/AddRoomModel";
 
 //dummy data for testing the room component, 
 
@@ -75,8 +76,13 @@ const rooms = [
     },
 ];
 const Rooms = () => {
-  return (
+  const [showModel,setShowModel]=useState(false);
+  function openModel(){
+        setShowModel(true);
+  }
+    return (
     <>
+
       <div className="container">
         <div className={styles.roomsHeader}>
           <div className={styles.left}>
@@ -87,7 +93,7 @@ const Rooms = () => {
             </div>
           </div>
           <div className={styles.right}>
-               <button className={styles.startRoomButton}>
+               <button  onClick={openModel} className={styles.startRoomButton}>
                  <img src="/images/add-room-icon.png" alt="room-icon" />
                  <span> start a room </span>
                </button>
@@ -100,6 +106,7 @@ const Rooms = () => {
                     ))}
                 </div>
       </div>
+      {showModel && <AddRoomModel/>}
     </>
   );
 };
