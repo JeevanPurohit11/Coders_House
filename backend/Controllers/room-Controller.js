@@ -1,3 +1,6 @@
+const RoomDto = require("../dtos/room-dto");
+const roomService= require('../Services/room-service');
+
 class RoomController{
    async create(req,res){
       const {topic,roomType}= req.body;
@@ -9,7 +12,11 @@ class RoomController{
          roomType,
          ownerId : req.user._id,
       });
+
+      return res.json(new RoomDto(room));
    }
 }
 
 module.exports = new RoomController; 
+
+//1 : 08
