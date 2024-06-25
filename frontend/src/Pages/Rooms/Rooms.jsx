@@ -106,7 +106,7 @@ const Rooms = () => {
                     ))}
                 </div>
       </div>
-      {showModel && <AddRoomModel/>}
+      {showModel && <AddRoomModel onClose={()=> setShowModel(false)}/>}
     </>
   );
 };
