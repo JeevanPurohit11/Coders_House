@@ -16,7 +16,7 @@ export const sendOtp = (data) => api.post('http://localhost:5500/api/send-otp', 
 export const verifyOtp = (data) => api.post('http://localhost:5500/api/verify-otp', data);
 export const activate = (data) => api.post('http://localhost:5500/api/activate', data);
 export const logout =()=> api.post('http://localhost:5500/api/logout');
-export const createRoom=()=> api.post('http://localhost:5500/api/rooms');
+export const createRoom=(data)=> api.post('http://localhost:5500/api/rooms',data);
 
 //intercepter sit inbetween our each request(frontend) and response(backend) to server //react -axios magic 
 //here we get a response object then we .use where we have to pass 2parameter 
