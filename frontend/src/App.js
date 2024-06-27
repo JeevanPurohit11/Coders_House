@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Authenticate from './Pages/Authenticate/Authenticate';
 import Activate from './Pages/Activate/Activate';
 import Rooms from './Pages/Rooms/Rooms'
+import Room from './Pages/Room/Room'
 import { useSelector } from 'react-redux';
 import './App.css'
 import {useLoadingWithRefresh} from './hooks/useLoadingWithRefresh';
@@ -80,6 +81,12 @@ function App() {
             <Route path="/rooms" element={
               <ProtectedRoute>
                   <Rooms/>
+              </ProtectedRoute>
+            }/>
+            {/* for dynamic allocation we use :id , id chnage in each instance */}
+             <Route path="/room/:id" element={
+              <ProtectedRoute>
+                  <Room/>
               </ProtectedRoute>
             }/>
         </Routes>
