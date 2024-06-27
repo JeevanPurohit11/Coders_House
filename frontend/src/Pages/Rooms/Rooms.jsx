@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Rooms.module.css";
 import RoomCard from "../../Components/RoomCard/RoomCard";
 import AddRoomModel from "../../Components/AddRoomModel/AddRoomModel";
-
+import { getAllRooms } from "../../http";
 //dummy data for testing the room component, 
 
 const rooms = [
@@ -77,6 +77,15 @@ const rooms = [
 ];
 const Rooms = () => {
   const [showModel,setShowModel]=useState(false);
+  const [room,setRooms]=useState([]);
+
+  useEffect(()=>{
+      const fetchRooms= async ()=>{
+         const {data}= await getAllRooms();
+         setRooms(data);  
+      };
+      fetchRooms();
+  },[]);
   function openModel(){
         setShowModel(true);
   }
