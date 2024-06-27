@@ -15,6 +15,11 @@ class RoomController{
 
       return res.json(new RoomDto(room));
    }
+   async index(req,res){
+      const rooms=await roomService.getAllRooms(['open']);  //by default show open rooms  
+      const allRooms=rooms.map((room)=>new RoomDto(room)); //we will do here pajination so , it will easy to fetch all those rooms
+      return res.json(allRooms);
+   }
 }
 
 module.exports = new RoomController; 
