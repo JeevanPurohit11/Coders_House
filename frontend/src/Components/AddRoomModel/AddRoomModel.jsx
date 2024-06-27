@@ -2,8 +2,10 @@ import React,{useState} from 'react';
 import Styles from './AddRoomModel.module.css';
 import TextInput from '../Shared/TextInput/TextInput';
 import {createRoom as create} from '../../http/index'
+import { useNavigate } from 'react-router-dom';
 
 const AddRoomModel = ({onClose}) => {
+  const navigate=useNavigate(); //for redirecting
   const [roomType, setRoomType] = useState('open');  //room type
   const [topic , setTopic]=useState('');            //room topic
 
@@ -11,6 +13,8 @@ const AddRoomModel = ({onClose}) => {
      if(!topic) return;
      try{
         const {data} = await create({topic,roomType});
+        navigate(`/room/${data.id}`);
+        //ex (room/08nbjhdgjfbskjcwv)
         console.log(data);
 
      }catch(err){
