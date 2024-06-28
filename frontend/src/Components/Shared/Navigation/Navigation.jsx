@@ -42,7 +42,8 @@ import {setAuth} from '../../../Store/authSlice';
         </Link>
             {isAuth && (
                 <div className={Styles.navRight}>
-                    <h3>{user.name}</h3>
+                    <h3>{user?.name}</h3>
+                    
                     <Link to="/">
                         <img
                             className={Styles.avatar}
