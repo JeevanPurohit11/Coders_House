@@ -16,9 +16,14 @@ class RoomController{
       return res.json(new RoomDto(room));
    }
    async index(req,res){
-      const rooms=await roomService.getAllRooms(['open']);  //by default show open rooms  
-      const allRooms=rooms.map((room)=>new RoomDto(room)); //we will do here pajination so , it will easy to fetch all those rooms
-      return res.json(allRooms);
+      try {
+         const rooms = await roomService.getAllRooms(['open']);  // By default show open rooms  
+         const allRooms = rooms.map((room) => new RoomDto(room)); // Pagination can be implemented here
+         return res.json(allRooms);
+       } catch (error) {
+         console.error("Error fetching rooms:", error);
+         return res.status(500).json({ message: "Could not fetch rooms" });
+       }
    }
 }
 

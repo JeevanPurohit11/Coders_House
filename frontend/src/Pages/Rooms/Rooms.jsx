@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Rooms.module.css";
 import RoomCard from "../../Components/RoomCard/RoomCard";
 import AddRoomModel from "../../Components/AddRoomModel/AddRoomModel";
-import { getAllRooms } from "../../http";
+// import { getAllRooms } from "../../http";
 //dummy data for testing the room component, 
 
 const rooms = [
