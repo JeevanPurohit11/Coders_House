@@ -29,7 +29,7 @@ const AddRoomModel = ({onClose}) => {
         </button>
         <div className={Styles.modalHeader}>
           <h3 className={Styles.heading}>Enter the topic to be discussed.</h3>
-          <TextInput fullwidth="true" value={topic} onChange={(e)=>setTopic(e.target.value)}/>
+          <TextInput fullWidth="true" value={topic} onChange={(e)=>setTopic(e.target.value)}/>
           <h2 className={Styles.subHeading}>Room Types</h2>
           <div className={Styles.roomTypes}>
             <div onClick={()=> setRoomType('open')}className={`${Styles.typeBox} ${
@@ -45,7 +45,7 @@ const AddRoomModel = ({onClose}) => {
               <span>Social</span>
             </div>
             <div onClick={()=> setRoomType('private')} className={`${Styles.typeBox} ${
-                                roomType === 'social' ? Styles.active : ''
+                                roomType === 'private' ? Styles.active : ''
                             }`}>
               <img src="/images/lock.png" alt="lock" />
               <span>Private</span>
