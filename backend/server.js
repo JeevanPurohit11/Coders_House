@@ -30,6 +30,7 @@ app.use(express.json({limit : '8mb'}));  // Enable JSON middleware // limit for 
 // Import and use router
 const router = require('./routes');
 const ACTIONS = require('../frontend/src/actions');
+const { ADD_PEER } = require('./actions');
 app.use(router);  // Prefix the routes with /api
 
 
@@ -51,9 +52,40 @@ io.on('connection',(socket)=>{
 
           //new MAP
         const clients=Array.from(io.sockets.adapter.rooms.get(roomId) || []); //[] array from first this there will be no user
+        clients.forEach((clientId)=>{
+             io.to(clientId).emit(ACTIONS.ADD_PEER,{
+                peerId : socket.id,
+                createOffer:false,
+                user,
+             });
+
+        });
+
+        socket.emit(ACTIONS.ADD_PEER,{
+            peerId : clientId,
+            createOffer:true,
+            user : socketUserMapping[cliendId],
+
+
+        });
+        socket.join(roomId);
+
         console.log(clients);
     });
-
+    //handle relay-ice
+    socket.on(ACTIONS.RELAY_ICE, ({ peerId, icecandidate }) => {
+        io.to(peerId).emit(ACTIONS.ICE_CANDIDATE, {
+            peerId: socket.id,
+            icecandidate,
+        });
+    });
+    //handle relay-sdp(session description)
+    socket.on(ACTIONS.RELAY_SDP, ({ peerId, sessionDescription }) => {
+        io.to(peerId).emit(ACTIONS.SESSION_DESCRIPTION, {
+            peerId: socket.id,
+            sessionDescription,
+        });
+    });
    
 
 })
