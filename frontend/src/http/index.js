@@ -18,6 +18,7 @@ export const activate = (data) => api.post('http://localhost:5500/api/activate',
 export const logout =()=> api.post('http://localhost:5500/api/logout');
 export const createRoom=(data)=> api.post('http://localhost:5500/api/rooms',data);
 export const getAllRooms=()=>api.get('http://localhost:5500/api/rooms');
+export const getRoom =(roomId)=>api.get(`http://localhost:5500/api/rooms/${roomId}`) ;
 
 
 //intercepter sit inbetween our each request(frontend) and response(backend) to server //react -axios magic 
