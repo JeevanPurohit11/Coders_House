@@ -1,19 +1,19 @@
-const mongoose= require('mongoose');
-const Schema= mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const roomSchema= new Schema(
+const roomSchema = new Schema(
     {
-        topic : {type : String , required : true},
-        roomType : {type : String , required : true},
-        ownerId : { type : Schema.Types.ObjectId , ref : 'user'},
-        speakers : {
-            type : [
+        topic: { type: String, required: true },
+        roomType: { type: String, required: true },
+        ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+        speakers: {
+            type: [
                 {
-                    type : Schema.Types.ObjectId,
-                    ref : 'user',
+                    type: Schema.Types.ObjectId,
+                    ref: 'User',
                 },
             ],
-            required : false,
+            required: false,
         },
     },
     {
@@ -21,4 +21,4 @@ const roomSchema= new Schema(
     }
 );
 
-module.exports = mongoose.model('Room',roomSchema,'rooms');
+module.exports = mongoose.model('Room', roomSchema, 'rooms');
