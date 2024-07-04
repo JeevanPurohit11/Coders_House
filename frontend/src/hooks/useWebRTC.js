@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useStateWithCallBack } from "./useStateWithCallBack";// Custom hook for state with callback
-import {socketInit} from '../Pages/socket/index'  // Importing socket initialization function
+import { useStateWithCallback } from "./useStateWithCallBack";// Custom hook for state with callback
+import socketInit from '../Pages/socket/index'  // Importing socket initialization function
 import { ACTIONS } from "../actions";
 import freeice from 'freeice';// Importing ICE servers configuration
 
@@ -163,14 +163,16 @@ export const useWebRTC = (roomId, user) => {
                         });
                     };
     
-                    // Add local media tracks to the peer connection
-                    localMediaStream.current.getTracks().forEach((track) => {
-                        connections.current[peerId].addTrack(
-                            track,
-                            localMediaStream.current
-                        );
-                    });
-    
+                    // Add local media tracks to the peer connection  
+                    // // Null check before accessing localMediaStream.current.getTracks()
+                    if (localMediaStream.current) {
+                        localMediaStream.current.getTracks().forEach((track) => {
+                            connections.current[peerId].addTrack(
+                                track,
+                                localMediaStream.current
+                            );
+                        });
+                    }
                     // Create an offer if required
                     if (createOffer) {
                         const offer = await connections.current[
@@ -258,11 +260,12 @@ export const useWebRTC = (roomId, user) => {
             // Cleanup function when component unmounts
             return () => {
                 // Stop all local media tracks
-                localMediaStream.current
-                    .getTracks()
-                    .forEach((track) => track.stop());
+                if (localMediaStream.current) {
+                    localMediaStream.current.getTracks().forEach((track) => track.stop());
+                }
     
                 // Emit LEAVE event to server with roomId
+                if (socket.current) {
                 socket.current.emit(ACTIONS.LEAVE, { roomId });
     
                 // Close all peer connections and delete associated elements
@@ -279,6 +282,7 @@ export const useWebRTC = (roomId, user) => {
                 socket.current.off(ACTIONS.SESSION_DESCRIPTION);
                 socket.current.off(ACTIONS.MUTE);
                 socket.current.off(ACTIONS.UNMUTE);
+            }
             };
         }, []);
     
